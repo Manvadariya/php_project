@@ -8,16 +8,16 @@ form.onsubmit = (e) => {
 continueBtn.addEventListener("click", () => {
     // Ajax
     let xhr = new XMLHttpRequest(); // creating XML object
-    xhr.open("POST", "", true);
+    xhr.open("POST", "register_candidate.php", true);
     xhr.onload = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = xhr.response;
-                if(data == "success") {
+                if(data.trim() === "success") {
                     location.href = "login.php";
                 }
                 else {
-                    errorText.textContent    = data;
+                    errorText.textContent = data.trim(); // Trim to remove extra whitespace
                     errorText.style.display = "block";
                 }
             } else {

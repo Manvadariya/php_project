@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-  <?php include_once "register_candidate.php";  ?>
   <div class="login-box" style="width: 500px;">
 
     <a href="index.html"><i class="fa fa-arrow-circle-left" style="font-size:24px; color: white; position: relative; top: -35px;"></i></a>
@@ -35,26 +34,21 @@
       </div>
       <div class="field image" style="position: relative; top: -70px; color: white;">
         <label>Select Image</label>
-        <input type="file" name="image" required="" style="position: relative; top: 40px; left: -97px; cursor:pointer;">
+        <input type="file" name="image" required="" style="position: relative; top: 43px; left: -97px; cursor:pointer; font-size: 15px;">
       </div>
       <div class="button">
-        <input type="submit" value="Submit" style="position: relative; top: -15px;" class="b1">
+        <input type="submit" value="Submit" style="position: relative; top: -30px;background-color: transparent;cursor: pointer; border: 1px solid #03e9f4; border-radius: 10px;" class="b1">
       </div>
-      <div class="error-text"></div>
-      <!-- <a href="#" style="position: relative;top:-15px;" class="b1">
-        <span></span>
-        <span></span>
-        <span></span> 
-        <span></span>
-        Submit
-      </a> -->
-      <!-- <a href="#" onclick="submitForm(event)" style="position: relative;top:-15px;" class="b1">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        Submit
-      </a> -->
+      <div class="error-txt" style="
+        color: #721c24;
+        background: #f8d7da;
+        padding: 8px 10px;
+        text-align: center;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #f5c6cb;
+        display: none;
+        top: 5px;"></div>
 
       <script src="js/signup.js"></script>
     </form>

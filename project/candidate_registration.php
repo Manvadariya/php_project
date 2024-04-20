@@ -15,14 +15,14 @@
     <img src="logo2.png" style="height: 58px; padding-left: 63px; position: relative; left: 50px; top: -13px;" >
     <h2>Registrar Your Self</h2>
 
-    <form action="login.php" method="post" enctype="multipart/form-data">
+    <form action="register_candidate.php" method="post" enctype="multipart/form-data">
 
       <div class="user-box" style="width: 47%;">
         <input type="text" name="fname" id="fname" required="">
         <label>First Name</label>
       </div>
       <div class="user-box" style="width: 47%; position: relative; left: 223px; top: -69px">
-        <input type="text" name="laname" id="laname" required="">
+        <input type="text" name="lname" id="lname" required="">
         <label>Last Name</label>
       </div>
       <div class="user-box" style="position: relative; top: -69px">
@@ -30,7 +30,7 @@
         <label>Email</label>
       </div>
       <div class="user-box" style="position: relative; top:-69px;">
-        <input type="password" name="password" id ="password" required="">
+        <input type="password" name="password" id="password" required="">
         <label>Password</label>
       </div>
       <div class="field image" style="position: relative; top: -70px; color: white;">
@@ -61,6 +61,3 @@
   </div>
 </body>
 </html>
-
-
-

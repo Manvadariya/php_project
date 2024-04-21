@@ -1,6 +1,6 @@
-const form = document.querySelector(".login-box form");
-const continueBtn = form.querySelector(".button input");
-const errorText = form.querySelector(".error-txt");
+const form = document.querySelector(".login-box form"),
+continueBtn = form.querySelector(".button input"),
+errorText = form.querySelector(".error-txt");
 
 form.onsubmit = (e) => {
     e.preventDefault(); // Prevent form submission
@@ -14,6 +14,7 @@ continueBtn.addEventListener("click", () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = xhr.response;
+                console.log(data);
                 if (data.trim() === "success") {
                     location.href = "login.php"; // Redirect to company login page
                 } else {

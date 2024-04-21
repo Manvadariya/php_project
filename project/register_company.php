@@ -1,6 +1,8 @@
 <?php
 include_once "config.php";
 
+if(isset($_POST['company_name']) && isset($_POST['business_email']) && isset($_POST['phone_no']) && isset($_POST['website']) && isset($_POST['description']) && isset($_POST['address']) && isset($_POST['password']) ){
+
 $company_name = mysqli_real_escape_string($conn, $_POST['company_name']);
 $business_email = mysqli_real_escape_string($conn, $_POST['business_email']);
 $phone_no = mysqli_real_escape_string($conn, $_POST['phone_no']);
@@ -59,5 +61,8 @@ if (!empty($company_name) && !empty($business_email) && !empty($phone_no) && !em
     }
 } else {
     echo "All input fields are required";
+}
+}else {
+    echo "Form submission failed";
 }
 ?>

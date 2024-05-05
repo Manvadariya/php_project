@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 if ($role == 'company') {
     // Query to check user credentials
-    $sql = "SELECT * FROM company WHERE email = '$username' AND password = '$password'";
+    $sql = "SELECT * FROM company WHERE business_email = '$username' AND password = '$password'";
     $result = mysqli_query($conn, $sql);
     
     if ($result) {

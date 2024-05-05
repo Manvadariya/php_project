@@ -47,7 +47,7 @@ if ($role == 'company') {
             session_start();
             $_SESSION['username'] = $username;
             $_SESSION['role'] = $role;
-            header("Location: index.html");
+            header("Location: company_dashboard.php");
         } else {
             // User does not exist or credentials are incorrect
             header("Location: login.php?error=invalid_credentials");

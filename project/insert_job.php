@@ -14,7 +14,12 @@ $sql = "INSERT INTO `jobs` (`company_id`, `job_post`, `location`, `salary`, `job
         VALUES (NULL, '$job_post', '$location', '$salary', '$job_description', '$experience_required')";
 
 if (mysqli_query($conn, $sql)) {
-    echo "Job posted successfully";
+    echo "<script>
+        alert('Job posted successfully: Job Post: $job_post, Location: $location, Salary: $salary, Job Description: $job_description, Experience Required: $experience_required');
+    </script>";
+    
+	header("Location: company_dashboard.php");
+    exit();
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }

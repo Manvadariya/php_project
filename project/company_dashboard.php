@@ -377,8 +377,7 @@ img {
         <div class="left" style="width: 30%; float: left; padding-top: 100px;">
           <?php include('com_form.html'); ?>
         </div>
-        <div class="right" style="width: 65%; background-color: aquamarine; float: right; padding-top: 100px;">
-          <h1 style="padding-top:px;">hello </h1>
+        <div class="right" style="width: 65%;  float: right; padding-top: 200px;">
           <div class="container my-4">
 
 

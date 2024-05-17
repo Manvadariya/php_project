@@ -314,7 +314,7 @@ img {
       <!--=============== REMIXICONS ===============-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
      
-      <title>Company Dashboard</title>
+      <title>Candidate Dashboard</title>
    </head>
    <body>
       <!--==================== HEADER ====================-->
@@ -370,8 +370,8 @@ img {
 
       <div class="main container">
         <div class="left" style="width: 30%; float: left; padding-top: 100px;">
-          <?php include('com_form.html'); ?>
-        </div>
+
+    </div>
         <div class="right" style="width: 65%;  float: right; padding-top: 200px;">
           <div class="container my-4">
 
@@ -380,25 +380,29 @@ img {
               <thead>
                 <tr>
                   <th scope="col">S.No</th>
-                  <th scope="col">Comapny Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone no</th>
-                  <th scope="col">Website</th>
+                  <th scope="col">Job Post</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Salary</th>
+                  <th scope="col">Job Description</th>
+                  <th scope="col">Experience Required</th>
+
                 </tr>
               </thead>
               <tbody>
                 <?php 
-                  $sql = "SELECT * FROM `company`";
+                  $sql = "SELECT * FROM `jobs`";
                   $result = mysqli_query($conn, $sql);
                   $sno = 0;
                   while($row = mysqli_fetch_assoc($result)){
                     $sno = $sno + 1;
                     echo "<tr>
                     <th scope='row'>". $sno . "</th>
-                    <td>". $row['company_name'] . "</td>
-                    <td>". $row['business_email'] . "</td>
-                    <td>". $row['phone_no'] . "</td>
-                    <td>". $row['website'] . "</td>
+                    <td>". $row['job_post'] . "</td>
+                    <td>". $row['location'] . "</td>
+                    <td>". $row['salary'] . "</td>
+                    <td>". $row['job_description'] . "</td>
+                    <td>". $row['experience_required'] . "</td>
+                    
                   
                     </tr>";
                 } 
@@ -425,7 +429,6 @@ img {
   <script>
     $(document).ready(function () {
       $('#myTable').DataTable();
-
     });
   </script>
    </body>

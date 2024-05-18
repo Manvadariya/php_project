@@ -1,11 +1,20 @@
 <!DOCTYPE html>
    <html lang="en">
    <head>
+   <link rel="stylesheet" 
+          href= 
+"https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+          integrity= 
+"sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5"
+          crossorigin="anonymous"> 
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <?php
      $conn = mysqli_connect("localhost", "root", "", "auxilio");
     ?>
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
       <style>
         /*=============== GOOGLE FONTS ===============*/
 @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap");
@@ -97,7 +106,7 @@ img {
 
 .main {
   position: relative;
-  height: 100vh;
+  height: 150vh;
 }
 
 .main__bg {
@@ -251,7 +260,23 @@ img {
   transform: translateY(0);
 }
 
+.btn-danger {
+    background-color: #dc3545; /* Background color */
+    border-color: #dc3545; /* Border color */
+    color: #fff; /* Text color */
+    /* Add any additional styling you want */
+    /* For example, padding, font-size, etc. */
+    padding: 5px 10px;
+    font-size: 15px;
+    border-radius: 6px;
+    /* You can customize hover and focus states as well */
+}
 
+.btn-danger:hover, .btn-danger:focus {
+    background-color: #c82333; /* Darken the background on hover/focus */
+    border-color: #bd2130; /* Darken the border on hover/focus */
+    color: #fff; /* Change text color on hover/focus if needed */
+}
 /*=============== BREAKPOINTS ===============*/
 /* For medium devices */
 @media screen and (min-width: 576px) {
@@ -309,6 +334,8 @@ img {
     margin-inline: auto;
   }
 }
+
+
       </style>
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
       <!--=============== REMIXICONS ===============-->
@@ -371,6 +398,31 @@ img {
       <div class="main container">
         <div class="left" style="width: 30%; float: left; padding-top: 100px;">
           <?php include('com_form.html'); ?>
+          
+       
+          <div class="display" style="border-radius:6px; padding: 20px ; background-color:#fff">
+                <table class="pure-table pure-table-horizontal">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="2" style="text-align: center;">Job Posts</th>
+                        </tr>
+                    </thead>
+                    <tbody style="border: #bd2130;">
+                        <?php 
+                            $sql = "SELECT * FROM `jobs`";
+                            $result = mysqli_query($conn, $sql);
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<tr>
+                                        <td>". $row['job_post'] . "</td>
+                                        <td><button type='button' class='btn btn-danger'>Delete</button></td>
+                                      </tr>";
+                                     
+                                      
+                            } 
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="right" style="width: 65%;  float: right; padding-top: 200px;">
           <div class="container my-4">
@@ -411,6 +463,7 @@ img {
           </h2>
         </div>
       </div>
+
       
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

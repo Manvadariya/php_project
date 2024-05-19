@@ -9,45 +9,9 @@
     <style>
         /*=============== GOOGLE FONTS ===============*/
         @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap");
-
-        /*=============== VARIABLES CSS ===============*/
-        :root {
-            --header-height: 3.5rem;
-
-            /*========== Colors ==========*/
-            /*Color mode HSL(hue, saturation, lightness)*/
-            --first-color: hsl(230, 75%, 56%);
-            --title-color: hsl(230, 75%, 15%);
-            --text-color: hsl(230, 12%, 40%); 
-            --body-color: hsl(230, 100%, 98%);
-            --container-color: hsl(230, 100%, 97%);
-            --border-color: hsl(230, 25%, 80%);
-
-            /*========== Font and typography ==========*/
-            /*.5rem = 8px | 1rem = 16px ...*/
-            --body-font: "Syne", sans-serif;
-            --h2-font-size: 1.25rem;
-            --normal-font-size: .938rem;
-
-            /*========== Font weight ==========*/
-            --font-regular: 400;
-            --font-medium: 500;
-            --font-semi-bold: 600;
-
-            /*========== z index ==========*/
-            --z-fixed: 100;
-            --z-modal: 1000;
+        ::-webkit-scrollbar{
+            display: none;
         }
-
-        /*========== Responsive typography ==========*/
-        @media screen and (min-width: 1023px) {
-            :root {
-                --h2-font-size: 1.5rem;
-                --normal-font-size: 1rem;
-            }
-        }
-
-        /*=============== BASE ===============*/
         * {
             box-sizing: border-box;
             padding: 0;
@@ -61,12 +25,12 @@
         body,
         input,
         button {
-            font-family: var(--body-font);
-            font-size: var(--normal-font-size);
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
         }
 
         body {
-            color: var(--text-color);
+            color: #3c4043;
         }
 
         input,
@@ -89,231 +53,9 @@
             height: auto;
         }
 
-        /*=============== REUSABLE CSS CLASSES ===============*/
-        .container {
-            max-width: 1120px;
-            margin-inline: 1.5rem;
-            padding: 2rem; /* Add padding to the container */
-        }
-
-        .main {
-            position: relative;
-            height: 100vh;
-        }
-
-        .main__bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: -1;
-        }
-
-        .search,
-        .login {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: var(--z-modal);
-            background-color: hsla(230, 75%, 15%, .1);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px); /* For safari */
-            padding: 8rem 1.5rem 0;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .4s;
-        }
-
-        /*=============== HEADER & NAV ===============*/
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--body-color);
-            box-shadow: 0 2px 16px hsla(230, 75%, 32%, .15);
-            z-index: var(--z-fixed);
-        }
-
-        .nav {
-            height: var(--header-height);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            bottom: 1.2rem;
-        }
-
-        .nav__logo {
-            color: var(--title-color);
-            font-weight: var(--font-semi-bold);
-            transition: color .4s;
-        }
-
-        .nav__actions {
-            display: flex;
-            align-items: center;
-            column-gap: 1rem;
-        }
-
-        .nav__search, 
-        .nav__login, 
-        .nav__toggle, 
-        .nav__close {
-            font-size: 1.25rem;
-            color: var(--title-color);
-            cursor: pointer;
-            transition: color .4s;
-        }
-
-        :is(.nav__logo, .nav__search, .nav__login, .nav__toggle, .nav__link):hover {
-            color: var(--first-color);
-        }
-
-        /* Navigation for mobile devices */
-        @media screen and (max-width: 1023px) {
-            .nav__menu {
-                position: fixed;
-                top: -100%;
-                left: 0;
-                background-color: var(--body-color);
-                box-shadow: 0 8px 16px hsla(230, 75%, 32%, .15);
-                width: 100%;
-                padding-block: 4.5rem 4rem;
-                transition: top .4s;
-            }
-        }
-
-        .nav__list {
-            display: flex;
-            flex-direction: column;
-            row-gap: 2.5rem;
-            text-align: center;
-        }
-
-        .nav__link {
-            color: var(--title-color);
-            font-weight: var(--font-semi-bold);
-            transition: color .4s;
-        }
-
-        .nav__close {
-            position: absolute;
-            top: 1.15rem;
-            right: 1.5rem;
-        }
-
-        /* Show menu */
-        .show-menu {
-            top: 0;
-        }
-
-        /*=============== SEARCH ===============*/
-        .search__form {
-            display: flex;
-            align-items: center;
-            column-gap: .5rem;
-            background-color: var(--container-color);
-            box-shadow: 0 8px 32px hsla(230, 75%, 15%, .2);
-            padding-inline: 1rem;
-            border-radius: .5rem;
-            transform: translateY(-1rem);
-            transition: transform .4s;
-        }
-
-        .search__icon {
-            font-size: 1.25rem;
-            color: var(--title-color);
-        }
-
-        .search__input {
-            width: 100%;
-            padding-block: 1rem;
-            background-color: var(--container-color);
-            color: var(--text-color);
-        }
-
-        .search__input::placeholder {
-            color: var(--text-color);
-        }
-
-        /* Show search */
-        .show-search {
-            opacity: 1;
-            pointer-events: initial;
-        }
-
-        .show-search .search__form {
-            transform: translateY(0);
-        }
-
-        /*=============== BREAKPOINTS ===============*/
-        /* For medium devices */
-        @media screen and (min-width: 576px) {
-            .search,
-            .login {
-                padding-top: 10rem;
-            }
-
-            .search__form {
-                max-width: 450px;
-                margin-inline: auto;
-            }
-
-            .search__close,
-            .login__close {
-                width: max-content;
-                top: 5rem;
-                left: 0;
-                right: 0;
-                margin-inline: auto;
-                font-size: 2rem;
-            }
-
-            .login__form {
-                max-width: 400px;
-                margin-inline: auto;
-            }
-        }
-
-        /* For large devices */
-        @media screen and (min-width: 1023px) {
-            .nav {
-                height: calc(var(--header-height) + 2rem);
-                column-gap: 3rem;
-            }
-            .nav__close, 
-            .nav__toggle {
-                display: none;
-            }
-            .nav__menu {
-                margin-left: auto;
-            }
-            .nav__list {
-                flex-direction: row;
-                column-gap: 3rem;
-            }
-
-            .login__form {
-                padding: 3rem 2rem 3.5rem;
-            }
-        }
-
-        @media screen and (min-width: 1150px) {
-            .container {
-                margin-inline: auto;
-            }
-        }
-
         .container-card {
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
-            padding: 2rem;
             background-color: #ffffff;
             border-radius: 1.2rem;
             box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
@@ -325,7 +67,8 @@
             justify-content: center;
             padding: 0;
             cursor: pointer;
-            margin-bottom: 1rem; /* Add margin to each card */
+            margin-bottom: 1rem;
+            width: 100%;
         }
 
         .container-card:hover {
@@ -336,11 +79,13 @@
         .header1 {
             display: flex;
             align-items: center;
-            padding: 2rem;
+            padding: 1.7rem;
+            padding-bottom: 1rem;
             background-color: #4e9ba7;
             color: white;
             transition: opacity 0.3s ease;
             z-index: 1;
+            width: 100%;
         }
 
         .container-card:hover .header1,
@@ -348,18 +93,15 @@
             opacity: 0;
         }
 
-        .logo {
-            width: 5rem;
-            height: 5rem;
-            background-color: rgb(78, 155, 167);
+        .logo img {
+            width: 7.5rem;
+            height: 7.5rem;
             margin-right: 1.25rem;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
+            border: 2px solid white;
         }
 
         .post-info {
@@ -385,13 +127,36 @@
             flex: 1;
             transition: opacity 0.3s ease;
             z-index: 1;
+            width: 100%;
         }
 
         .fa-map-marker-alt, .fa-money-bill-wave, .fa-briefcase {
             margin-right: 0.5rem;
         }
 
+        .apply-con {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            color: #fff;
+            border: none;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 90%;
+        }
+
         .apply-btn {
+            align-self: center;
             display: inline-block;
             background-color: #478e9a;
             color: white;
@@ -401,20 +166,14 @@
             transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
             font-size: 1rem;
             cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
+            margin-top: 1rem;
         }
 
         .apply-btn:hover {
             background-color: #3a7f8b;
         }
 
-        .container-card:hover .apply-btn {
+        .container-card:hover .apply-con {
             opacity: 1;
             visibility: visible;
             transform: translate(-50%, -50%) scale(1.1);
@@ -448,85 +207,63 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <!--==================== HEADER ====================-->
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="#" class="nav__logo"><img src="logo3.png" style="width: 210px;">
-            </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="#" class="nav__link">Home</a>
-                    </li>
-
-                    <li class="nav__item">
-                        <a href="#" class="nav__link">Chat</a>
-                    </li>
-
-                </ul>
-
-                <!-- Close button -->
-                <div class="nav__close" id="nav-close">
-                    <i class="ri-close-line"></i>
-                </div>
-            </div>
-
-            <div class="nav__actions">
-                <!-- Search button -->
-                <i class="ri-search-line nav__search" id="search-btn"></i>
-
-                <!-- Login button -->
-                <i class="ri-user-line nav__login" id="login-btn"></i>
-
-                <!-- Toggle button -->
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="ri-menu-line"></i>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!--==================== SEARCH ====================-->
-    <div class="search" id="search">
-        <form action="" class="search__form">
-            <i class="ri-search-line search__icon"></i>
-            <input type="search" placeholder="What are you looking for?" class="search__input">
-        </form>
-
-        <i class="ri-close-line search__close" id="search-close"></i>
-    </div>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
 
     <div class="space" style="width: 100%;height:70px"></div>
     
     <div class="container my-5">
         <div class="row">
-            <!--  -->
             <?php 
-                $sql = "SELECT * FROM `jobs`";
+                $sql = "SELECT * FROM `jobs` WHERE (job_post LIKE '%ai%' OR location LIKE '%noc%')";
                 $result = mysqli_query($conn, $sql);
-                $sno = 0;
                 while($row = mysqli_fetch_assoc($result)){
                     echo "<div class='col-lg-6 mb-4'>
                             <div class='container-card'>
                                 <div class='header1'>
-                                    <div class='logo'>Logo</div>
+                                    <div class='logo'>
+                                        <img src='images/17136357554.jpeg'>
+                                    </div>
                                     <div class='post-info'>
                                         <div class='title'>" . $row['job_post'] . "</div>
-                                        <div class='name'>company name</div>
+                                        <div class='name'>Company Name</div>
                                     </div>
                                 </div>
                                 <div class='info-section'>
                                     <div><i class='fas fa-briefcase'></i> Experience: " . $row['experience_required'] . "</div>
-                                    <div><i class='fas fa-money-bill-wave'></i> Salary: $" . $row['salary'] . "</div>
+                                    <div><i class='fas fa-money-bill-wave'></i> Salary: ₹" . $row['salary'] . "</div>
                                     <div><i class='fas fa-map-marker-alt'></i> Location: " . $row['location'] . "</div>
                                 </div>
-                                <button class='apply-btn'>Apply</button>
+                                <div class='apply-con'>
+                                    <p>" . $row['job_description'] . "</p>
+                                    <button class='apply-btn'>Apply</button>
+                                </div>
                             </div>
                         </div>";
                 } 
             ?>
-            <!--  -->
         </div>
     </div>
 

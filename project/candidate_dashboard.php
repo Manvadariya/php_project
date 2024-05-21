@@ -1,3 +1,14 @@
+<?php
+    session_start();
+    // Ensure the session variable is set before using it
+    if (isset($_SESSION['email'])) {
+        $email = $_SESSION['email'];
+    } else {
+        // Redirect to login page if not logged in
+        header("Location: login.php");
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -236,7 +247,7 @@
     
     <div class="container my-5">
         <div class="row">
-            <?php 
+            <?php
                 $sql = "SELECT * FROM `jobs` WHERE (job_post LIKE '%ai%' OR location LIKE '%noc%')";
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_assoc($result)){

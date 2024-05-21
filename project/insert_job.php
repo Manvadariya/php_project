@@ -1,7 +1,8 @@
 <?php
-// Include database connection file
+session_start();
 include_once "config.php";
 
+echo "hello";
 // Retrieve form data
 $job_post = mysqli_real_escape_string($conn, $_POST['job_post']);
 $location = mysqli_real_escape_string($conn, $_POST['location']);

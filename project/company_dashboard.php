@@ -1,3 +1,13 @@
+<?php
+    session_start();
+    // Ensure the session variable is set before using it
+    if (isset($_SESSION['cemail'])) {
+        $email = $_SESSION['cemail'];
+    } else {
+      header("Location: login.php");
+      exit();
+    }
+?>
 <!DOCTYPE html>
    <html lang="en">
    <head>
@@ -439,7 +449,7 @@ img {
                 </tr>
               </thead>
               <tbody>
-                <?php 
+                <?php
                   $sql = "SELECT * FROM `company`";
                   $result = mysqli_query($conn, $sql);
                   $sno = 0;

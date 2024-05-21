@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once "config.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,9 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row_count = mysqli_num_rows($result);
         if ($row_count == 1) {
             // User exists, redirect to dashboard or respective page based on role
-            session_start();
-            $_SESSION['username'] = $username;
-            $_SESSION['role'] = $role;
+            $_SESSION['email'] = $username;
             header("Location: candidate_dashboard.php");
         } else {
             // User does not exist or credentials are incorrect
@@ -44,9 +43,7 @@ if ($role == 'company') {
         $row_count = mysqli_num_rows($result);
         if ($row_count == 1) {
             // User exists, redirect to dashboard or respective page based on role
-            session_start();
-            $_SESSION['username'] = $username;
-            $_SESSION['role'] = $role;
+            $_SESSION['cemail'] = $username;
             header("Location: company_dashboard.php");
         } else {
             // User does not exist or credentials are incorrect

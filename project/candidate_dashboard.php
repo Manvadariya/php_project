@@ -1,17 +1,32 @@
 <?php
     session_start();
-    // Ensure the session variable is set before using it
+    
     if (isset($_SESSION['email'])) {
         $email = $_SESSION['email'];
+        
     } else {
-        // Redirect to login page if not logged in
+        //if not logged in
         header("Location: login.php");
         exit();
+    }
+
+    $conn = mysqli_connect("localhost", "root", "", "auxilio");
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+   
+    $search = '';
+    if (isset($_GET['search'])) {
+        $search = mysqli_real_escape_string($conn, $_GET['search']);
     }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/png" href="images/11.png">
+<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
@@ -216,10 +231,12 @@
     <title>Candidate Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <a class="navbar-brand" href="#"><img src="logo2.png" alt="Logo" style="width:155px "> </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -227,17 +244,15 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" style="color: white;">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                <li class="nav-item" >
+                    <a class="nav-link" href="logout.php" name="logout" style="color: white;" >Logout</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
+               
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+            <form class="form-inline my-2 my-lg-0" method="GET" action="">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" value="<?php echo htmlspecialchars($search); ?>">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
@@ -247,8 +262,7 @@
     
     <div class="container my-5">
         <div class="row">
-            <?php
-                $sql = "SELECT * FROM `jobs` WHERE (job_post LIKE '%ai%' OR location LIKE '%noc%')";
+            <?php                $sql = "SELECT * FROM `jobs` WHERE (job_post LIKE '%$search%' OR location LIKE '%$search%')";
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_assoc($result)){
                     echo "<div class='col-lg-6 mb-4'>
@@ -259,7 +273,9 @@
                                     </div>
                                     <div class='post-info'>
                                         <div class='title'>" . $row['job_post'] . "</div>
-                                        <div class='name'>Company Name</div>
+                                        <div class='name'>".
+                                        $name = "SELECT company_name FROM `company` WHERE company_id = $row['company_id']";
+                                        ."</div>
                                     </div>
                                 </div>
                                 <div class='info-section'>

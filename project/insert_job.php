@@ -2,7 +2,13 @@
 session_start();
 include_once "config.php";
 
-echo "hello";
+$cemail = $_SESSION['cemail'];
+$sql1 = "SELECT company_id FROM `company` WHERE business_email = 'vedacare@gmail.com'";
+$cid = mysqli_query($conn, $sql1);
+$temp = mysqli_fetch_assoc($cid);
+$cid = $temp['company_id'];
+$_SESSION['cid'] = $cid;
+
 // Retrieve form data
 $job_post = mysqli_real_escape_string($conn, $_POST['job_post']);
 $location = mysqli_real_escape_string($conn, $_POST['location']);
@@ -12,7 +18,7 @@ $experience_required = mysqli_real_escape_string($conn, $_POST['experience_requi
 
 // Insert data into database
 $sql = "INSERT INTO `jobs` (`company_id`, `job_post`, `location`, `salary`, `job_description`, `experience_required`) 
-        VALUES (NULL, '$job_post', '$location', '$salary', '$job_description', '$experience_required')";
+        VALUES ('$cid', '$job_post', '$location', '$salary', '$job_description', '$experience_required')";
 
 if (mysqli_query($conn, $sql)) {
     echo "<script>

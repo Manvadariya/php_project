@@ -44,6 +44,12 @@ if ($role == 'company') {
         if ($row_count == 1) {
             // User exists, redirect to dashboard or respective page based on role
             $_SESSION['cemail'] = $username;
+            $sql1 = "SELECT company_id FROM `company` WHERE business_email = '$username'";
+            $cid = mysqli_query($conn, $sql1);
+            $temp = mysqli_fetch_assoc($cid);
+            $cid = $temp['company_id'];
+            $_SESSION['cid'] = $cid;
+
             header("Location: company_dashboard.php");
         } else {
             // User does not exist or credentials are incorrect

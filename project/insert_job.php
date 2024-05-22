@@ -3,7 +3,7 @@ session_start();
 include_once "config.php";
 
 $cemail = $_SESSION['cemail'];
-$sql1 = "SELECT company_id FROM `company` WHERE business_email = 'vedacare@gmail.com'";
+$sql1 = "SELECT company_id FROM `company` WHERE business_email = '$cemail'";
 $cid = mysqli_query($conn, $sql1);
 $temp = mysqli_fetch_assoc($cid);
 $cid = $temp['company_id'];

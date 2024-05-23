@@ -5,7 +5,6 @@
         $email = $_SESSION['email'];
         
     } else {
-        //if not logged in
         header("Location: login.php");
         exit();
     }
@@ -227,7 +226,6 @@
     </style>
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <!--=============== REMIXICONS ===============-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
     
     <title>Candidate Dashboard</title>

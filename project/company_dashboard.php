@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Ensure the session variable is set before using it
 if (isset($_SESSION['cemail'])) {
     $email = $_SESSION['cemail'];
     if (isset($_SESSION['cid'])) {
@@ -31,10 +30,7 @@ if (isset($_GET['search'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /*=============== GOOGLE FONTS ===============*/
         @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&display=swap");
-
-        /*=============== BASE ===============*/
         * {
             box-sizing: border-box;
             padding: 0;
@@ -79,7 +75,6 @@ if (isset($_GET['search'])) {
     <link rel="icon" type="image/png" href="images/11.png">
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <!--=============== REMIXICONS ===============-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
     <title>Company Dashboard</title>
 </head>
@@ -123,8 +118,11 @@ if (isset($_GET['search'])) {
                     while($row = mysqli_fetch_assoc($result)){
                         echo "<tr>
                                 <td>". $row['job_post'] . "</td>
-                                <td><a href='delete.php?job_id=" . $row['job_id'] . "'><button type='button' class='btn btn-danger'>Delete</button></a></td>
+                               
+                                <td><a href='delete.php?job_id=".$row['job_id']."'><button type='button' class='btn btn-danger'>Delete</button></a></td>
                               </tr>";
+                            
+                              
                     } 
                     ?>
                 </tbody>

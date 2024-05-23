@@ -7,7 +7,7 @@ form.onsubmit = (e) => {
 };
 continueBtn.addEventListener("click", () => {
     // Ajax
-    let xhr = new XMLHttpRequest(); // creating XML object
+    let xhr = new XMLHttpRequest(); 
     xhr.open("POST", "register_candidate.php", true);
     xhr.onload = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -17,7 +17,7 @@ continueBtn.addEventListener("click", () => {
                     location.href = "login.php";
                 }
                 else {
-                    errorText.textContent = data.trim(); // Trim to remove extra whitespace
+                    errorText.textContent = data.trim(); 
                     errorText.style.display = "block";
                 }
             } else {
@@ -25,7 +25,6 @@ continueBtn.addEventListener("click", () => {
             }
         }
     }
-    // we have to send the form data through ajax to php
-    let formData = new FormData(form); // creating new formData object
-    xhr.send(formData); // sending the form data to php
+    let formData = new FormData(form);
+    xhr.send(formData);
 });

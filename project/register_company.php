@@ -12,16 +12,16 @@ $address = mysqli_real_escape_string($conn, $_POST['address']);
 $password = mysqli_real_escape_string($conn, $_POST['password']);
 
 if (!empty($company_name) && !empty($business_email) && !empty($phone_no) && !empty($website) && !empty($description) && !empty($address) && !empty($password)) {
-    // Check if email is valid
+
     if (filter_var($business_email, FILTER_VALIDATE_EMAIL)) {
-        // Check if email already exists
+
         $sql_check_email = "SELECT * FROM company WHERE business_email = '{$business_email}'";
         $result_check_email = mysqli_query($conn, $sql_check_email);
 
         if (mysqli_num_rows($result_check_email) > 0) {
             echo "Email already exists";
         } else {
-            // Proceed with the registration process
+
             if (isset($_FILES['logo'])) {
                 $img_name = $_FILES['logo']['name'];
                 $tmp_name = $_FILES['logo']['tmp_name'];

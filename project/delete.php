@@ -1,36 +1,48 @@
 <?php
-// Process delete operation after confirmation
-if (isset($_POST["job_id"]) && !empty($_POST["job_id"])) {
-    // Include config file
-    require_once "config.php";
+session_start();
 
-    // Prepare a delete statement
-    $sql = "DELETE FROM `jobs` WHERE job_id = ?";
+require_once "config.php";
 
-    if ($stmt = mysqli_prepare($conn, $sql)) {
-        // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "i", $param_job_id);
-
-        // Set parameters
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["job_id"]) && !empty($_POST["job_id"])) {
         $param_job_id = trim($_POST["job_id"]);
 
-        // Attempt to execute the prepared statement
-        if (mysqli_stmt_execute($stmt)) {
-            // Records deleted successfully. Redirect to landing page
+        mysqli_begin_transaction($conn);
+
+        try {
+            $sql = "DELETE FROM `connection` WHERE job_id = ?";
+            if ($stmt = mysqli_prepare($conn, $sql)) {
+                mysqli_stmt_bind_param($stmt, "i", $param_job_id);
+                if (!mysqli_stmt_execute($stmt)) {
+                    throw new Exception("Error deleting related rows in connection table: " . mysqli_error($conn));
+                }
+                mysqli_stmt_close($stmt);
+            } else {
+                throw new Exception("Error preparing statement for deleting related rows: " . mysqli_error($conn));
+            }
+
+            $sql = "DELETE FROM `jobs` WHERE job_id = ?";
+            if ($stmt = mysqli_prepare($conn, $sql)) {
+                mysqli_stmt_bind_param($stmt, "i", $param_job_id);
+                if (!mysqli_stmt_execute($stmt)) {
+                    throw new Exception("Error deleting row in jobs table: " . mysqli_error($conn));
+                }
+                mysqli_stmt_close($stmt);
+            } else {
+                throw new Exception("Error preparing statement for deleting row: " . mysqli_error($conn));
+            }
+
+            mysqli_commit($conn);
             header("location: company_dashboard.php");
             exit();
-        } else {
-            echo "Oops! Something went wrong. Please try again later.";
+        } catch (Exception $e) {
+            mysqli_rollback($conn);
+            echo "Oops! Something went wrong. Error: " . $e->getMessage();
         }
-    }
-    mysqli_stmt_close($stmt);
 
-
-    mysqli_close($conn);
-} else {
-    // Check existence of job_id parameter
-    if (empty(trim($_GET["job_id"]))) {
-        // URL doesn't contain job_id parameter. Redirect to error page
+        // Close connection
+        mysqli_close($conn);
+    } else {
         header("location: error.php");
         exit();
     }
@@ -41,12 +53,11 @@ if (isset($_POST["job_id"]) && !empty($_POST["job_id"])) {
 <html lang="en">
 <head>
     <link rel="icon" type="image/png" href="images/11.png">
-
     <meta charset="UTF-8">
     <title>Delete Record</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style>
-        .box{
+        .box {
             width: 400px;
             border-radius: 5px;
             margin: 0 auto;
@@ -57,7 +68,7 @@ if (isset($_POST["job_id"]) && !empty($_POST["job_id"])) {
             box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
             background-color: #ebecec;
         }
-        #sub{
+        #sub {
             background-color: #e10707;
             color: white;
             padding: 10px 20px;
@@ -66,7 +77,7 @@ if (isset($_POST["job_id"]) && !empty($_POST["job_id"])) {
             cursor: pointer;
             border-radius: 5px;
         }
-        #no{
+        #no {
             background-color: #77d372;
             color: white;
             padding: 12px 20px;
@@ -77,19 +88,18 @@ if (isset($_POST["job_id"]) && !empty($_POST["job_id"])) {
             text-decoration: none;
         }
     </style>
+</head>
 <body>
     <div class="box">
         <h1>Delete Record</h1>
-        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
-            <input type="hidden" name="job_id" value="<?php echo trim($_GET["job_id"]); ?>"/>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="hidden" name="job_id" value="<?php echo isset($_GET["job_id"]) ? trim($_GET["job_id"]) : ''; ?>"/>
             <p>Are you sure you want to delete this record?</p><br/>
-                <p>
-                    <input type="submit" id="sub" value="Yes">
-                    <a href="company_dashboard.php" id="no">No</a>
-                </p>
+            <p>
+                <input type="submit" id="sub" value="Yes">
+                <a href="company_dashboard.php" id="no">No</a>
+            </p>
         </form>
     </div>
 </body>
-
 </html>
-  

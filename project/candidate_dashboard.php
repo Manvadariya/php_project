@@ -1,4 +1,9 @@
 <?php
+    $conn = mysqli_connect("localhost", "root", "", "auxilio");
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
     session_start();
     
     if (isset($_SESSION['email'])) {
@@ -9,11 +14,13 @@
         exit();
     }
 
-    $conn = mysqli_connect("localhost", "root", "", "auxilio");
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
+    $user_query = "SELECT user_id FROM candidate WHERE email = '$email'";
+    $user_result = mysqli_query($conn, $user_query);
+    if (!$user_result) {
+        die("Error fetching user: " . mysqli_error($conn));
     }
-
+    $user_row = mysqli_fetch_assoc($user_result);
+    $user_id = $user_row['user_id'];
    
     $search = '';
     if (isset($_GET['search'])) {
@@ -262,32 +269,29 @@
     
     <div class="container my-5">
         <div class="row">
-            <?php
-                $sql = "SELECT * FROM `jobs` WHERE (job_post LIKE '%$search%' OR location LIKE '%$search%')";
+        <?php
+                        $sql = "SELECT j.*, c.company_name, c.logo
+                        FROM jobs j
+                        LEFT JOIN connection a ON j.job_id = a.job_id AND a.user_id = '$user_id'
+                        JOIN company c ON j.company_id = c.company_id
+                        WHERE (j.job_post LIKE '%$search%' OR j.location LIKE '%$search%' OR c.company_name LIKE '%$search%') 
+                        AND a.job_id IS NULL";
                 $result = mysqli_query($conn, $sql);
-                while($row = mysqli_fetch_assoc($result)){
-                    $post = $row['job_post'];
-                    $sql1 = "SELECT company_id FROM `jobs` WHERE job_post = '$post'";
-                    $cid = mysqli_query($conn, $sql1);
-                    $temp = mysqli_fetch_assoc($cid);
-                    $cid = $temp['company_id'];
-                    $sql2 = "SELECT company_name FROM `company` WHERE company_id = '$cid'";
-                    $cname = mysqli_query($conn, $sql2);
-                    $temp1 = mysqli_fetch_assoc($cname);
-                    $cname = $temp1['company_name'];
-                    $sql3 = "SELECT logo FROM `company` WHERE company_id = '$cid'";
-                    $logo = mysqli_query($conn, $sql3);
-                    $temp2 = mysqli_fetch_assoc($logo);
-                    $logo = $temp2['logo'];
+    
+                if (!$result) {
+                    die("Error fetching jobs: " . mysqli_error($conn) . "\nSQL: " . $sql);
+                }
+    
+                while ($row = mysqli_fetch_assoc($result)) {
                     echo "<div class='col-lg-6 mb-4'>
                             <div class='container-card'>
                                 <div class='header1'>
                                     <div class='logo'>
-                                        <img src='$logo'>
+                                        <img src='{$row['logo']}'>
                                     </div>
                                     <div class='post-info'>
                                         <div class='title'>" . $row['job_post'] . "</div>
-                                        <div class='name'>".$cname."</div>
+                                        <div class='name'>" . $row['company_name'] . "</div>
                                     </div>
                                 </div>
                                 <div class='info-section'>
@@ -296,14 +300,13 @@
                                     <div><i class='fas fa-map-marker-alt'></i> Location: " . $row['location'] . "</div>
                                 </div>
                                 <div class='apply-con'>
-         
                                     <p>" . $row['job_description'] . "</p>
                                     <a href='apply.php?job_id=" . $row['job_id'] . "'><button type='button' class='apply-btn'>Apply</button></a>
                                 </div>
                             </div>
                         </div>";
-                } 
-            ?>
+                }
+                ?>
         </div>
     </div>
 
